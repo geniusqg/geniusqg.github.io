@@ -56,4 +56,24 @@
         <tag>python</tag>
       </tags>
   </entry>
+  <entry>
+    <title>jupyter安装不同版本python</title>
+    <url>/2022/jupyter%E5%AE%89%E8%A3%85%E4%B8%8D%E5%90%8C%E7%89%88%E6%9C%ACpython.html</url>
+    <content><![CDATA[<h3 id="利用pyenv安装python-3-9-0"><a href="#利用pyenv安装python-3-9-0" class="headerlink" title="利用pyenv安装python 3.9.0"></a>利用pyenv安装python 3.9.0</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">pyenv install 3.9.0</span><br></pre></td></tr></table></figure>
+
+<h3 id="创建python虚拟环境并切换"><a href="#创建python虚拟环境并切换" class="headerlink" title="创建python虚拟环境并切换"></a>创建python虚拟环境并切换</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">pyenv virtualenv 3.9.0 py39</span><br><span class="line">pyenv activate py39</span><br></pre></td></tr></table></figure>
+
+<h3 id="安装ipykernel"><a href="#安装ipykernel" class="headerlink" title="安装ipykernel"></a>安装ipykernel</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">pip install ipykernel</span><br></pre></td></tr></table></figure>
+
+<h3 id="通过ipython安装jupyter-kernel"><a href="#通过ipython安装jupyter-kernel" class="headerlink" title="通过ipython安装jupyter kernel"></a>通过ipython安装jupyter kernel</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="comment"># 对全部用户安装生效</span></span><br><span class="line">ipython kernel install --name py39</span><br><span class="line"><span class="comment"># 只对当前用户安装</span></span><br><span class="line">ipython kernel install --user --name py39</span><br></pre></td></tr></table></figure>
+
+<h3 id="退出当前虚拟环境并重启jupyterlab"><a href="#退出当前虚拟环境并重启jupyterlab" class="headerlink" title="退出当前虚拟环境并重启jupyterlab"></a>退出当前虚拟环境并重启jupyterlab</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">pyenv deactivate</span><br><span class="line">jupyter lab --allow-root</span><br></pre></td></tr></table></figure>]]></content>
+      <categories>
+        <category>2022</category>
+      </categories>
+      <tags>
+        <tag>python</tag>
+        <tag>jupyter</tag>
+      </tags>
+  </entry>
 </search>
