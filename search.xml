@@ -77,4 +77,46 @@
         <tag>jupyter</tag>
       </tags>
   </entry>
+  <entry>
+    <title>wsl2下jupyterlab开机自启动</title>
+    <url>/2022/wsl2%E4%B8%8Bjupyterlab%E5%BC%80%E6%9C%BA%E8%87%AA%E5%90%AF%E5%8A%A8.html</url>
+    <content><![CDATA[<h3 id="wsl2系统：ubuntu-18-04"><a href="#wsl2系统：ubuntu-18-04" class="headerlink" title="wsl2系统：ubuntu 18.04"></a>wsl2系统：ubuntu 18.04</h3><h3 id="编写启动停止脚本"><a href="#编写启动停止脚本" class="headerlink" title="编写启动停止脚本"></a>编写启动停止脚本</h3><h4 id="启动脚本"><a href="#启动脚本" class="headerlink" title="启动脚本"></a>启动脚本</h4><ul>
+<li><p>在~&#x2F;.jupyter&#x2F;bin目录下将如下内容写入startup.sh</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="meta">#! /bin/sh</span></span><br><span class="line"><span class="built_in">cd</span> /path/to/jupyter</span><br><span class="line">/usr/bin/nohup jupyter lab --allow-root &gt;&gt; ~/.jupyter/log/stdout.log 2&gt;&amp;1 &amp; <span class="built_in">echo</span> $! &gt; ~/.jupyter/log/jupyterlab.pid;</span><br></pre></td></tr></table></figure>
+<span id="more"></span>
+</li>
+<li><p>设置可执行权限</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="built_in">chmod</span> 777 startup.sh </span><br></pre></td></tr></table></figure></li>
+</ul>
+<h4 id="停止脚本"><a href="#停止脚本" class="headerlink" title="停止脚本"></a>停止脚本</h4><ul>
+<li>在~&#x2F;.jupyter&#x2F;bin目录下将如下内容写入shutdown.sh<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="meta">#! /bin/sh</span></span><br><span class="line"><span class="built_in">cat</span> ~/.jupyter/log/jupyterlab.pid | xargs <span class="built_in">kill</span> -9;</span><br></pre></td></tr></table></figure></li>
+<li>设置可执行权限<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="built_in">chmod</span> 777 shutdown.sh</span><br></pre></td></tr></table></figure></li>
+</ul>
+<h3 id="编写系统service脚本"><a href="#编写系统service脚本" class="headerlink" title="编写系统service脚本"></a>编写系统service脚本</h3><ul>
+<li>在&#x2F;etc&#x2F;init.d目录下将如下内容写入jupyter<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="meta">#! /bin/sh</span></span><br><span class="line"><span class="comment">#</span></span><br><span class="line"><span class="comment"># description: jupyter startup scripts</span></span><br><span class="line"><span class="comment">#</span></span><br><span class="line">startup=<span class="string">&quot;~/.jupyter/bin/startup.sh&quot;</span></span><br><span class="line">shutdown=<span class="string">&quot;~/.jupyter/bin/shutdown.sh&quot;</span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="title">start</span></span>() &#123;</span><br><span class="line">        <span class="variable">$startup</span></span><br><span class="line">        <span class="built_in">echo</span> <span class="string">&quot;jupyterlab started.&quot;</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="title">stop</span></span>() &#123;</span><br><span class="line"></span><br><span class="line">        <span class="variable">$shutdown</span></span><br><span class="line">        <span class="built_in">echo</span> <span class="string">&quot;jupyterlab stopped.&quot;</span></span><br><span class="line"></span><br><span class="line">&#125;</span><br><span class="line"><span class="comment"># See how we were called.</span></span><br><span class="line"><span class="keyword">case</span> <span class="string">&quot;<span class="variable">$1</span>&quot;</span> <span class="keyword">in</span></span><br><span class="line">    start)</span><br><span class="line">        start</span><br><span class="line">        ;;</span><br><span class="line">    stop)</span><br><span class="line">        stop</span><br><span class="line">        ;;</span><br><span class="line">    status)</span><br><span class="line">	ps -ef | grep jupyter-lab</span><br><span class="line">        ;;</span><br><span class="line">    restart)</span><br><span class="line">        stop</span><br><span class="line">        start</span><br><span class="line">        ;;</span><br><span class="line">    *)</span><br><span class="line">        <span class="built_in">echo</span> $<span class="string">&quot;Usage: <span class="variable">$0</span> &#123;start|stop|status|restart&#125;&quot;</span></span><br><span class="line">        ;;</span><br><span class="line"><span class="keyword">esac</span></span><br><span class="line"><span class="built_in">exit</span> 0</span><br></pre></td></tr></table></figure></li>
+</ul>
+<h3 id="加入wsl2开机启动项"><a href="#加入wsl2开机启动项" class="headerlink" title="加入wsl2开机启动项"></a>加入wsl2开机启动项</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="built_in">echo</span> <span class="string">&#x27;service jupyter restart&#x27;</span> &gt;&gt; /etc/start.wsl</span><br></pre></td></tr></table></figure>
+
+<h3 id="存在问题"><a href="#存在问题" class="headerlink" title="存在问题"></a>存在问题</h3><h4 id="开机启动后，查看log发现有个报错"><a href="#开机启动后，查看log发现有个报错" class="headerlink" title="开机启动后，查看log发现有个报错"></a>开机启动后，查看log发现有个报错</h4><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">+ Start <span class="string">&quot;file:///root/.local/share/jupyter/runtime/jpserver-10268-open. ...</span></span><br><span class="line"><span class="string">+ ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~</span></span><br><span class="line"><span class="string">    + CategoryInfo          : InvalidOperation: (:) [Start-Process]��InvalidOperationException</span></span><br><span class="line"><span class="string">    + FullyQualifiedErrorId : InvalidOperationException,Microsoft.PowerShell.Commands.StartProcessCommand</span></span><br></pre></td></tr></table></figure>
+
+<h5 id="如何解决"><a href="#如何解决" class="headerlink" title="如何解决"></a>如何解决</h5><ul>
+<li><p>生成jupyter配置文件</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">jupyter notebook --generate-config</span><br></pre></td></tr></table></figure>
+<p>生成的配置文件在&#x2F;root&#x2F;.jupyter&#x2F;jupyter_lab_config.py</p>
+</li>
+<li><p>在配置文件中找到c.ServerApp.use_redirect_file<br>默认被注释且等于True，把注释放开，修改值为False</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">c.ServerApp.use_redirect_file=False</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>具体可参考<br><a href="https://github.com/jupyter/jupyter_core/issues/191">Jupyter Notebook does not load using ubuntu 18.04 LTS in windows 10 #191</a></p>
+</li>
+</ul>
+]]></content>
+      <categories>
+        <category>2022</category>
+      </categories>
+      <tags>
+        <tag>jupyter</tag>
+        <tag>wsl2</tag>
+      </tags>
+  </entry>
 </search>

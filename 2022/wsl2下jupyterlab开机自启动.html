@@ -1,0 +1,426 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222"><meta name="generator" content="Hexo 6.3.0">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css" integrity="sha256-AbA177XfpSnFEvgpYu1jMygiLabzPCJCRIBtR5jGc0k=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"geniusqg.github.io","root":"/","images":"/images","scheme":"Pisces","darkmode":false,"version":"8.13.1","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":{"enable":false,"style":null},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"},"path":"/search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}}</script><script src="/js/config.js"></script>
+
+    <meta name="description" content="wsl2系统：ubuntu 18.04编写启动停止脚本启动脚本 在~&#x2F;.jupyter&#x2F;bin目录下将如下内容写入startup.sh 123#! &#x2F;bin&#x2F;shcd &#x2F;path&#x2F;to&#x2F;jupyter&#x2F;usr&#x2F;bin&#x2F;nohup jupyter lab --allow-root &gt;&gt; ~&#x2F;.jupyter&#x2F;log&#x2F;stdout.log 2&gt;&amp;1 &amp;am">
+<meta property="og:type" content="article">
+<meta property="og:title" content="wsl2下jupyterlab开机自启动">
+<meta property="og:url" content="https://geniusqg.github.io/2022/wsl2%E4%B8%8Bjupyterlab%E5%BC%80%E6%9C%BA%E8%87%AA%E5%90%AF%E5%8A%A8.html">
+<meta property="og:site_name" content="CODE LIFE">
+<meta property="og:description" content="wsl2系统：ubuntu 18.04编写启动停止脚本启动脚本 在~&#x2F;.jupyter&#x2F;bin目录下将如下内容写入startup.sh 123#! &#x2F;bin&#x2F;shcd &#x2F;path&#x2F;to&#x2F;jupyter&#x2F;usr&#x2F;bin&#x2F;nohup jupyter lab --allow-root &gt;&gt; ~&#x2F;.jupyter&#x2F;log&#x2F;stdout.log 2&gt;&amp;1 &amp;am">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2022-10-26T09:30:40.000Z">
+<meta property="article:modified_time" content="2022-10-26T10:16:51.776Z">
+<meta property="article:author" content="geniusqg">
+<meta property="article:tag" content="jupyter">
+<meta property="article:tag" content="wsl2">
+<meta name="twitter:card" content="summary">
+
+
+<link rel="canonical" href="https://geniusqg.github.io/2022/wsl2%E4%B8%8Bjupyterlab%E5%BC%80%E6%9C%BA%E8%87%AA%E5%90%AF%E5%8A%A8.html">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"https://geniusqg.github.io/2022/wsl2%E4%B8%8Bjupyterlab%E5%BC%80%E6%9C%BA%E8%87%AA%E5%90%AF%E5%8A%A8.html","path":"2022/wsl2下jupyterlab开机自启动.html","title":"wsl2下jupyterlab开机自启动"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>wsl2下jupyterlab开机自启动 | CODE LIFE</title>
+  
+
+
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">CODE LIFE</p>
+      <i class="logo-line"></i>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="home fa-fw"></i>首页</a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="tags fa-fw"></i>标签</a></li><li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="archive fa-fw"></i>归档</a></li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup"><div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off" maxlength="80"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close" role="button">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div class="search-result-container no-result">
+  <div class="search-result-icon">
+    <i class="fa fa-spinner fa-pulse fa-5x"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+        
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#wsl2%E7%B3%BB%E7%BB%9F%EF%BC%9Aubuntu-18-04"><span class="nav-number">1.</span> <span class="nav-text">wsl2系统：ubuntu 18.04</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%BC%96%E5%86%99%E5%90%AF%E5%8A%A8%E5%81%9C%E6%AD%A2%E8%84%9A%E6%9C%AC"><span class="nav-number">2.</span> <span class="nav-text">编写启动停止脚本</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%90%AF%E5%8A%A8%E8%84%9A%E6%9C%AC"><span class="nav-number">2.1.</span> <span class="nav-text">启动脚本</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%81%9C%E6%AD%A2%E8%84%9A%E6%9C%AC"><span class="nav-number">2.2.</span> <span class="nav-text">停止脚本</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%BC%96%E5%86%99%E7%B3%BB%E7%BB%9Fservice%E8%84%9A%E6%9C%AC"><span class="nav-number">3.</span> <span class="nav-text">编写系统service脚本</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%8A%A0%E5%85%A5wsl2%E5%BC%80%E6%9C%BA%E5%90%AF%E5%8A%A8%E9%A1%B9"><span class="nav-number">4.</span> <span class="nav-text">加入wsl2开机启动项</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%AD%98%E5%9C%A8%E9%97%AE%E9%A2%98"><span class="nav-number">5.</span> <span class="nav-text">存在问题</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%BC%80%E6%9C%BA%E5%90%AF%E5%8A%A8%E5%90%8E%EF%BC%8C%E6%9F%A5%E7%9C%8Blog%E5%8F%91%E7%8E%B0%E6%9C%89%E4%B8%AA%E6%8A%A5%E9%94%99"><span class="nav-number">5.1.</span> <span class="nav-text">开机启动后，查看log发现有个报错</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#%E5%A6%82%E4%BD%95%E8%A7%A3%E5%86%B3"><span class="nav-number">5.1.1.</span> <span class="nav-text">如何解决</span></a></li></ol></li></ol></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author site-overview-item animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">geniusqg</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap site-overview-item animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">3</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/categories/">
+        <span class="site-state-item-count">1</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">4</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+
+
+
+        </div>
+      </div>
+    </div>
+  </aside>
+  <div class="sidebar-dimmer"></div>
+
+
+    </header>
+
+    
+  <div class="back-to-top" role="button" aria-label="返回顶部">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://geniusqg.github.io/2022/wsl2%E4%B8%8Bjupyterlab%E5%BC%80%E6%9C%BA%E8%87%AA%E5%90%AF%E5%8A%A8.html">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="geniusqg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="CODE LIFE">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="wsl2下jupyterlab开机自启动 | CODE LIFE">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          wsl2下jupyterlab开机自启动
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+      
+
+      <time title="创建时间：2022-10-26 17:30:40 / 修改时间：18:16:51" itemprop="dateCreated datePublished" datetime="2022-10-26T17:30:40+08:00">2022-10-26</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/2022/" itemprop="url" rel="index"><span itemprop="name">2022</span></a>
+        </span>
+    </span>
+
+  
+    <span style="display: none" id="/2022/wsl2%E4%B8%8Bjupyterlab%E5%BC%80%E6%9C%BA%E8%87%AA%E5%90%AF%E5%8A%A8.html" class="post-meta-item leancloud_visitors" data-flag-title="wsl2下jupyterlab开机自启动" title="阅读次数">
+      <span class="post-meta-item-icon">
+        <i class="far fa-eye"></i>
+      </span>
+      <span class="post-meta-item-text">阅读次数：</span>
+      <span class="leancloud-visitors-count"></span>
+    </span>
+    <span class="post-meta-item" title="阅读次数" id="busuanzi_container_page_pv">
+      <span class="post-meta-item-icon">
+        <i class="far fa-eye"></i>
+      </span>
+      <span class="post-meta-item-text">阅读次数：</span>
+      <span id="busuanzi_value_page_pv"></span>
+    </span>
+    <span class="post-meta-break"></span>
+    <span class="post-meta-item" title="本文字数">
+      <span class="post-meta-item-icon">
+        <i class="far fa-file-word"></i>
+      </span>
+      <span class="post-meta-item-text">本文字数：</span>
+      <span>1.6k</span>
+    </span>
+    <span class="post-meta-item" title="阅读时长">
+      <span class="post-meta-item-icon">
+        <i class="far fa-clock"></i>
+      </span>
+      <span class="post-meta-item-text">阅读时长 &asymp;</span>
+      <span>1 分钟</span>
+    </span>
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+        <h3 id="wsl2系统：ubuntu-18-04"><a href="#wsl2系统：ubuntu-18-04" class="headerlink" title="wsl2系统：ubuntu 18.04"></a>wsl2系统：ubuntu 18.04</h3><h3 id="编写启动停止脚本"><a href="#编写启动停止脚本" class="headerlink" title="编写启动停止脚本"></a>编写启动停止脚本</h3><h4 id="启动脚本"><a href="#启动脚本" class="headerlink" title="启动脚本"></a>启动脚本</h4><ul>
+<li><p>在~&#x2F;.jupyter&#x2F;bin目录下将如下内容写入startup.sh</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#! /bin/sh</span></span><br><span class="line"><span class="built_in">cd</span> /path/to/jupyter</span><br><span class="line">/usr/bin/nohup jupyter lab --allow-root &gt;&gt; ~/.jupyter/log/stdout.log 2&gt;&amp;1 &amp; <span class="built_in">echo</span> $! &gt; ~/.jupyter/log/jupyterlab.pid;</span><br></pre></td></tr></table></figure>
+<span id="more"></span>
+</li>
+<li><p>设置可执行权限</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">chmod</span> 777 startup.sh </span><br></pre></td></tr></table></figure></li>
+</ul>
+<h4 id="停止脚本"><a href="#停止脚本" class="headerlink" title="停止脚本"></a>停止脚本</h4><ul>
+<li>在~&#x2F;.jupyter&#x2F;bin目录下将如下内容写入shutdown.sh<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#! /bin/sh</span></span><br><span class="line"><span class="built_in">cat</span> ~/.jupyter/log/jupyterlab.pid | xargs <span class="built_in">kill</span> -9;</span><br></pre></td></tr></table></figure></li>
+<li>设置可执行权限<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">chmod</span> 777 shutdown.sh</span><br></pre></td></tr></table></figure></li>
+</ul>
+<h3 id="编写系统service脚本"><a href="#编写系统service脚本" class="headerlink" title="编写系统service脚本"></a>编写系统service脚本</h3><ul>
+<li>在&#x2F;etc&#x2F;init.d目录下将如下内容写入jupyter<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#! /bin/sh</span></span><br><span class="line"><span class="comment">#</span></span><br><span class="line"><span class="comment"># description: jupyter startup scripts</span></span><br><span class="line"><span class="comment">#</span></span><br><span class="line">startup=<span class="string">&quot;~/.jupyter/bin/startup.sh&quot;</span></span><br><span class="line">shutdown=<span class="string">&quot;~/.jupyter/bin/shutdown.sh&quot;</span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="title">start</span></span>() &#123;</span><br><span class="line">        <span class="variable">$startup</span></span><br><span class="line">        <span class="built_in">echo</span> <span class="string">&quot;jupyterlab started.&quot;</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="title">stop</span></span>() &#123;</span><br><span class="line"></span><br><span class="line">        <span class="variable">$shutdown</span></span><br><span class="line">        <span class="built_in">echo</span> <span class="string">&quot;jupyterlab stopped.&quot;</span></span><br><span class="line"></span><br><span class="line">&#125;</span><br><span class="line"><span class="comment"># See how we were called.</span></span><br><span class="line"><span class="keyword">case</span> <span class="string">&quot;<span class="variable">$1</span>&quot;</span> <span class="keyword">in</span></span><br><span class="line">    start)</span><br><span class="line">        start</span><br><span class="line">        ;;</span><br><span class="line">    stop)</span><br><span class="line">        stop</span><br><span class="line">        ;;</span><br><span class="line">    status)</span><br><span class="line">	ps -ef | grep jupyter-lab</span><br><span class="line">        ;;</span><br><span class="line">    restart)</span><br><span class="line">        stop</span><br><span class="line">        start</span><br><span class="line">        ;;</span><br><span class="line">    *)</span><br><span class="line">        <span class="built_in">echo</span> $<span class="string">&quot;Usage: <span class="variable">$0</span> &#123;start|stop|status|restart&#125;&quot;</span></span><br><span class="line">        ;;</span><br><span class="line"><span class="keyword">esac</span></span><br><span class="line"><span class="built_in">exit</span> 0</span><br></pre></td></tr></table></figure></li>
+</ul>
+<h3 id="加入wsl2开机启动项"><a href="#加入wsl2开机启动项" class="headerlink" title="加入wsl2开机启动项"></a>加入wsl2开机启动项</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">echo</span> <span class="string">&#x27;service jupyter restart&#x27;</span> &gt;&gt; /etc/start.wsl</span><br></pre></td></tr></table></figure>
+
+<h3 id="存在问题"><a href="#存在问题" class="headerlink" title="存在问题"></a>存在问题</h3><h4 id="开机启动后，查看log发现有个报错"><a href="#开机启动后，查看log发现有个报错" class="headerlink" title="开机启动后，查看log发现有个报错"></a>开机启动后，查看log发现有个报错</h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">+ Start <span class="string">&quot;file:///root/.local/share/jupyter/runtime/jpserver-10268-open. ...</span></span><br><span class="line"><span class="string">+ ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~</span></span><br><span class="line"><span class="string">    + CategoryInfo          : InvalidOperation: (:) [Start-Process]��InvalidOperationException</span></span><br><span class="line"><span class="string">    + FullyQualifiedErrorId : InvalidOperationException,Microsoft.PowerShell.Commands.StartProcessCommand</span></span><br></pre></td></tr></table></figure>
+
+<h5 id="如何解决"><a href="#如何解决" class="headerlink" title="如何解决"></a>如何解决</h5><ul>
+<li><p>生成jupyter配置文件</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">jupyter notebook --generate-config</span><br></pre></td></tr></table></figure>
+<p>生成的配置文件在&#x2F;root&#x2F;.jupyter&#x2F;jupyter_lab_config.py</p>
+</li>
+<li><p>在配置文件中找到c.ServerApp.use_redirect_file<br>默认被注释且等于True，把注释放开，修改值为False</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">c.ServerApp.use_redirect_file=False</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>具体可参考<br><a target="_blank" rel="noopener" href="https://github.com/jupyter/jupyter_core/issues/191">Jupyter Notebook does not load using ubuntu 18.04 LTS in windows 10 #191</a></p>
+</li>
+</ul>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/jupyter/" rel="tag"># jupyter</a>
+              <a href="/tags/wsl2/" rel="tag"># wsl2</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2022/jupyter%E5%AE%89%E8%A3%85%E4%B8%8D%E5%90%8C%E7%89%88%E6%9C%ACpython.html" rel="prev" title="jupyter安装不同版本python">
+                  <i class="fa fa-chevron-left"></i> jupyter安装不同版本python
+                </a>
+            </div>
+            <div class="post-nav-item">
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+    <div class="comments gitalk-container"></div>
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+<div class="wordcount">
+  <span class="post-meta-item">
+    <span class="post-meta-item-icon">
+      <i class="fa fa-chart-line"></i>
+    </span>
+      <span>站点总字数：</span>
+    <span title="站点总字数">6k</span>
+  </span>
+  <span class="post-meta-item">
+    <span class="post-meta-item-icon">
+      <i class="fa fa-coffee"></i>
+    </span>
+      <span>站点阅读时长 &asymp;</span>
+    <span title="站点阅读时长">5 分钟</span>
+  </span>
+</div>
+<div class="busuanzi-count">
+    <span class="post-meta-item" id="busuanzi_container_site_uv">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-user"></i>
+      </span>
+      <span class="site-uv" title="总访客量">
+        <span id="busuanzi_value_site_uv"></span>
+      </span>
+    </span>
+    <span class="post-meta-item" id="busuanzi_container_site_pv">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-eye"></i>
+      </span>
+      <span class="site-pv" title="总访问量">
+        <span id="busuanzi_value_site_pv"></span>
+      </span>
+    </span>
+</div>
+
+    </div>
+  </footer>
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/next-boot.js"></script>
+
+  
+<script src="https://cdnjs.cloudflare.com/ajax/libs/hexo-generator-searchdb/1.4.0/search.js" integrity="sha256-vXZMYLEqsROAXkEw93GGIvaB2ab+QW6w3+1ahD9nXXA=" crossorigin="anonymous"></script>
+<script src="/js/third-party/search/local-search.js"></script>
+
+
+
+
+
+  
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+  <script class="next-config" data-name="leancloud_visitors" type="application/json">{"enable":true,"app_id":"TUho6fQPyrp8wpvwWoZFyS6M-9Nh9j0Va","app_key":"BBlpSTGtm5Z7HHKa6XtBlxfS","server_url":"https://tuho6fqp.lc-cn-e1-shared.com","security":true}</script>
+  <script src="/js/third-party/statistics/lean-analytics.js"></script>
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/gitalk/1.8.0/gitalk.css" integrity="sha256-AJnUHL7dBv6PGaeyPQJcgQPDjt/Hn/PvYZde1iqfp8U=" crossorigin="anonymous">
+
+<script class="next-config" data-name="gitalk" type="application/json">{"enable":true,"github_id":"geniusqg","repo":"blog-comment","client_id":"3190e9326b3a80dcaaa6","client_secret":"a9fedd19725ea722058f8f3d51eef6148ef9ed83","admin_user":"geniusqg","distraction_free_mode":true,"proxy":"https://cors-anywhere.azm.workers.dev/https://github.com/login/oauth/access_token","language":"zh-CN","labels":"Gitalk","js":{"url":"https://cdnjs.cloudflare.com/ajax/libs/gitalk/1.8.0/gitalk.min.js","integrity":"sha256-MVK9MGD/XJaGyIghSVrONSnoXoGh3IFxLw0zfvzpxR4="},"path_md5":"4eb29e046932d617f6da5f9be64bf889"}</script>
+<script src="/js/third-party/comments/gitalk.js"></script>
+
+</body>
+</html>
