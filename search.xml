@@ -119,4 +119,26 @@
         <tag>wsl2</tag>
       </tags>
   </entry>
+  <entry>
+    <title>wsl2开机启动服务</title>
+    <url>/2022/wsl2%E5%BC%80%E6%9C%BA%E5%90%AF%E5%8A%A8%E6%9C%8D%E5%8A%A1.html</url>
+    <content><![CDATA[<h3 id="wsl-开机启动"><a href="#wsl-开机启动" class="headerlink" title="wsl 开机启动"></a>wsl 开机启动</h3><h4 id="创建脚本："><a href="#创建脚本：" class="headerlink" title="创建脚本："></a>创建脚本：</h4><p>路径&#x2F;etc&#x2F;start.wsl<br>内容</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">service ssh restart</span><br><span class="line">service mysql restart</span><br></pre></td></tr></table></figure>
+<p>给予执行权限</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">sudo <span class="built_in">chmod</span> +x /etc/init.wsl</span><br></pre></td></tr></table></figure>
+<h4 id="windows设置"><a href="#windows设置" class="headerlink" title="windows设置"></a>windows设置</h4><p>创建脚本 ubuntu.vbs</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">Set ws = WScript.CreateObject(<span class="string">&quot;WScript.Shell&quot;</span>)</span><br><span class="line">ws.run <span class="string">&quot;wsl -d Ubuntu-18.04 -u root /etc/start.wsl restart&quot;</span></span><br></pre></td></tr></table></figure>
+<ul>
+<li>设置Win10开机启动项Windows下: Win+R 输入 shell:startup 。 </li>
+<li>将 ubuntu.vbs 拖入到打开的文件夹中，Win10开机便会自动启动。</li>
+</ul>
+<h5 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h5><p><a href="http://xin.el0310.com/index.php/post/276.html">http://xin.el0310.com/index.php/post/276.html</a></p>
+]]></content>
+      <categories>
+        <category>2022</category>
+      </categories>
+      <tags>
+        <tag>wsl2</tag>
+      </tags>
+  </entry>
 </search>
