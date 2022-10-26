@@ -82,7 +82,7 @@
     <url>/2022/wsl2%E4%B8%8Bjupyterlab%E5%BC%80%E6%9C%BA%E8%87%AA%E5%90%AF%E5%8A%A8.html</url>
     <content><![CDATA[<h3 id="wsl2系统：ubuntu-18-04"><a href="#wsl2系统：ubuntu-18-04" class="headerlink" title="wsl2系统：ubuntu 18.04"></a>wsl2系统：ubuntu 18.04</h3><h3 id="编写启动停止脚本"><a href="#编写启动停止脚本" class="headerlink" title="编写启动停止脚本"></a>编写启动停止脚本</h3><h4 id="启动脚本"><a href="#启动脚本" class="headerlink" title="启动脚本"></a>启动脚本</h4><ul>
 <li><p>在~&#x2F;.jupyter&#x2F;bin目录下将如下内容写入startup.sh</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="meta">#! /bin/sh</span></span><br><span class="line"><span class="built_in">cd</span> /path/to/jupyter</span><br><span class="line">/usr/bin/nohup jupyter lab --allow-root &gt;&gt; ~/.jupyter/log/stdout.log 2&gt;&amp;1 &amp; <span class="built_in">echo</span> $! &gt; ~/.jupyter/log/jupyterlab.pid;</span><br></pre></td></tr></table></figure>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="meta">#! /bin/sh</span></span><br><span class="line"><span class="built_in">cd</span> /root/workspace/note; <span class="comment"># 存放jupyter文件目录</span></span><br><span class="line">/usr/bin/nohup /root/.pyenv/versions/note/bin/jupyter lab --allow-root &gt;&gt; /root/.jupyter/log/stdout.log 2&gt;&amp;1 &amp; <span class="built_in">echo</span> $! &gt; /root/.jupyter/log/jupyterlab.pid;</span><br></pre></td></tr></table></figure>
 <span id="more"></span>
 </li>
 <li><p>设置可执行权限</p>
